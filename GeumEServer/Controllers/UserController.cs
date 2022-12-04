@@ -29,5 +29,16 @@ namespace GeumEServer.Controllers
             return result;
         }
 
+        [HttpGet]
+        public List<User> GetUsers() 
+        {
+            List<User> results = _context.Users
+                .OrderByDescending(item => item.UserId)
+                .ToList();
+
+            return results;
+        }
+
+
     }
 }
