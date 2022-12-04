@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "PhzuXgnbcU1RLxg0ZI1r1/S3hAfU9fIZ47Zct9qX4u1r+9bx698Cj0iB6zDvRAFvsLDYSgiXRqnmDwX2F/lPHw==",
+  "dgSpecHash": "gkFdfyRT1KwLq6nhha0VmNMsThip1l+gFB7zYrGcmH8m4aCehexqdS55MkkgjU11Qq4JKrpzrI7KmzFa4qf0zA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Newcl\\Desktop\\GeumEServer\\GeumEServer\\GeumEServer.csproj",
   "expectedPackageFiles": [
@@ -34,6 +34,7 @@
     "C:\\Users\\Newcl\\.nuget\\packages\\microsoft.identitymodel.tokens\\5.5.0\\microsoft.identitymodel.tokens.5.5.0.nupkg.sha512",
     "C:\\Users\\Newcl\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Users\\Newcl\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "C:\\Users\\Newcl\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.14\\microsoft.visualstudio.azure.containers.tools.targets.1.10.14.nupkg.sha512",
     "C:\\Users\\Newcl\\.nuget\\packages\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Users\\Newcl\\.nuget\\packages\\newtonsoft.json\\10.0.1\\newtonsoft.json.10.0.1.nupkg.sha512",
     "C:\\Users\\Newcl\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
