@@ -51,27 +51,9 @@ namespace GeumEServer.Controllers
             return result;
         }
 
-        // Update Password
-        [HttpPut("/password")]
-        public bool UpdateUserPassword([FromBody]string[] info)
-        { 
-            User findUser = _context.Users
-                .Where(item => item.Email == info[0])
-                .FirstOrDefault();
-
-            if (findUser == null)
-                return false;
-
-            findUser.Password = info[1];
-
-            _context.SaveChanges();
-
-            return true;
-        }
-
-        // Update Comment
+        // Update
         [HttpPut]
-        public User UpdateUserComment([FromBody]User user)
+        public User UpdateUser([FromBody] User user)
         {
             User findUser = _context.Users
                 .Where(item => item.Email == user.Email)
@@ -88,8 +70,26 @@ namespace GeumEServer.Controllers
             return findUser;
         }
 
+        // Update Password
+        [HttpPut("password")]
+        public bool UpdateUserPassword([FromBody]string[] info)
+        {
+            User findUser = _context.Users
+                .Where(item => item.Email == info[0])
+                .FirstOrDefault();
+
+            if (findUser == null)
+                return false;
+
+            findUser.Password = info[1];
+
+            _context.SaveChanges();
+
+            return true;
+        }
+
         // Delete
-        [HttpDelete("/email")]
+        [HttpDelete("{email}")]
         public bool DeleteUser(string email)
         {
             var findUser = _context.Users
