@@ -19,18 +19,19 @@ namespace GeumEServer.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
-        public User GetUser(int id)
+        // Create
+        [HttpPost]
+        public User CreateUser(User user)
         {
-            User result = _context.Users
-                .Where(item => item.UserId == id)
-                .FirstOrDefault();
+            _context.Users.Add(user);
+            _context.SaveChanges();
 
-            return result;
+            return user;
         }
 
+        // Read All User
         [HttpGet]
-        public List<User> GetUsers() 
+        public List<User> GetUsers()
         {
             List<User> results = _context.Users
                 .OrderByDescending(item => item.UserId)
@@ -39,6 +40,69 @@ namespace GeumEServer.Controllers
             return results;
         }
 
+        // Read
+        [HttpGet("{email}")]
+        public User GetUser(string email)
+        {
+            User result = _context.Users
+                .Where(item => item.Email == email)
+                .FirstOrDefault();
 
+            return result;
+        }
+
+        // Update Password
+        [HttpPut("/password")]
+        public bool UpdateUserPassword([FromBody]string[] info)
+        { 
+            User findUser = _context.Users
+                .Where(item => item.Email == info[0])
+                .FirstOrDefault();
+
+            if (findUser == null)
+                return false;
+
+            findUser.Password = info[1];
+
+            _context.SaveChanges();
+
+            return true;
+        }
+
+        // Update Comment
+        [HttpPut]
+        public User UpdateUserComment([FromBody]User user)
+        {
+            User findUser = _context.Users
+                .Where(item => item.Email == user.Email)
+                .FirstOrDefault();
+
+            if (findUser == null)
+                return null;
+
+            findUser.Adress = user.Adress;
+            findUser.Comment = user.Comment;
+
+            _context.SaveChanges();
+
+            return findUser;
+        }
+
+        // Delete
+        [HttpDelete("/email")]
+        public bool DeleteUser(string email)
+        {
+            var findUser = _context.Users
+                .Where(x => x.Email == email)
+                .FirstOrDefault();
+
+            if (findUser == null)
+                return false;
+
+            _context.Users.Remove(findUser);
+            _context.SaveChanges();
+
+            return true;
+        }
     }
 }

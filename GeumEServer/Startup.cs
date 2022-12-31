@@ -8,10 +8,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.SqlServer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Pomelo.EntityFrameworkCore.MySql.Storage;
+
 
 namespace GeumEServer
 {
@@ -27,10 +30,16 @@ namespace GeumEServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            string mySqlConnectionStr = Configuration.GetConnectionString("DefaultConnection");
+            //services.AddDbContextPool<ApplicationDbContext>
+            //    (options => options.UseMySql(mySqlConnectionStr));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(mySqlConnectionStr));
+
+            services.AddControllers().AddNewtonsoftJson();
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
