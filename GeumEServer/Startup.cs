@@ -37,8 +37,10 @@ namespace GeumEServer
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(mySqlConnectionStr));
 
-            services.AddControllers().AddNewtonsoftJson();
-
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling =
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddControllers();
         }
 

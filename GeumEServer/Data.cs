@@ -28,6 +28,7 @@ namespace GeumEServer
         public User User { get; set; }
         [ForeignKey(nameof(User))] [Required]
         public int UserId { get; set; }
+        public string UserEmail { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

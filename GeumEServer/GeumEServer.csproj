@@ -9,6 +9,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20221204084144_GeumE.cs" />
     <Compile Remove="Migrations\20221204084144_GeumE.Designer.cs" />
+    <Compile Remove="Migrations\20221230202921_DBInit.cs" />
+    <Compile Remove="Migrations\20221230202921_DBInit.Designer.cs" />
+    <Compile Remove="Migrations\20230101174959_DogAdduserEmail.cs" />
+    <Compile Remove="Migrations\20230101174959_DogAdduserEmail.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

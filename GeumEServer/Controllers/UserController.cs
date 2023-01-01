@@ -53,21 +53,21 @@ namespace GeumEServer.Controllers
 
         // Update
         [HttpPut]
-        public User UpdateUser([FromBody] User user)
+        public bool UpdateUser([FromBody] User user)
         {
             User findUser = _context.Users
                 .Where(item => item.Email == user.Email)
                 .FirstOrDefault();
 
             if (findUser == null)
-                return null;
+                return false;
 
             findUser.Adress = user.Adress;
             findUser.Comment = user.Comment;
 
             _context.SaveChanges();
 
-            return findUser;
+            return true;
         }
 
         // Update Password
