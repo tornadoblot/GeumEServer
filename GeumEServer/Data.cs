@@ -11,7 +11,7 @@ namespace GeumEServer
     {
         [Key]
         public int UserId { get; set; }
-        public Dog Dog { get; set; }
+        public ICollection<Dog> Dogs { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]
@@ -26,9 +26,7 @@ namespace GeumEServer
         [Key]
         public int Id { get; set; }
         public User User { get; set; }
-        [ForeignKey(nameof(User))] [Required]
-        public int UserId { get; set; }
-        public string UserEmail { get; set; }
+        public string Email { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
@@ -43,15 +41,14 @@ namespace GeumEServer
         public int Id { get; set; }
         [Required]
         public User User { get; set; }
-        [ForeignKey(nameof(User))] [Required]
-        public int UserId { get; set; }
+        public string Email { get; set; }
         [Required]
         public DateTime Start { get; set; }
         [Required]
         public DateTime End { get; set; }
         [Required]
         public int Distance { get; set; }
-        public String Places { get; set; }
+        public ICollection<Place>? Places { get; set; }
     }
 
     public class Place

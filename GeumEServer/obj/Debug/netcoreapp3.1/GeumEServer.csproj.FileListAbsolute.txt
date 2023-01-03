@@ -6,7 +6,6 @@ C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\bin\Debug\netcoreapp3.1\GeumEServ
 C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\bin\Debug\netcoreapp3.1\GeumEServer.runtimeconfig.dev.json
 C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\bin\Debug\netcoreapp3.1\GeumEServer.dll
 C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\bin\Debug\netcoreapp3.1\GeumEServer.pdb
-C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\obj\Debug\netcoreapp3.1\GeumEServer.csproj.AssemblyReference.cache
 C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\obj\Debug\netcoreapp3.1\GeumEServer.AssemblyInfoInputs.cache
 C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\obj\Debug\netcoreapp3.1\GeumEServer.AssemblyInfo.cs
 C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\obj\Debug\netcoreapp3.1\GeumEServer.csproj.CoreCompileInputs.cache
@@ -65,3 +64,4 @@ C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\bin\Debug\netcoreapp3.1\Pomelo.Js
 C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\obj\Debug\netcoreapp3.1\GeumEServer.csproj.AssemblyReference.cache

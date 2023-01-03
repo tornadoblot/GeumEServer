@@ -13,6 +13,10 @@
     <Compile Remove="Migrations\20221230202921_DBInit.Designer.cs" />
     <Compile Remove="Migrations\20230101174959_DogAdduserEmail.cs" />
     <Compile Remove="Migrations\20230101174959_DogAdduserEmail.Designer.cs" />
+    <Compile Remove="Migrations\20230103185303_EditWalkDogUId.cs" />
+    <Compile Remove="Migrations\20230103185303_EditWalkDogUId.Designer.cs" />
+    <Compile Remove="Migrations\20230103185431_EditWalkDogUrId.cs" />
+    <Compile Remove="Migrations\20230103185431_EditWalkDogUrId.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

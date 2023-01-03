@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GeumEServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230101175546_AddDogUserEmail")]
-    partial class AddDogUserEmail
+    [Migration("20230103200103_EditWalkPlace")]
+    partial class EditWalkPlace
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,6 +31,9 @@ namespace GeumEServer.Migrations
                     b.Property<DateTime>("Birth")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -39,16 +42,12 @@ namespace GeumEServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Dogs");
                 });
@@ -92,7 +91,12 @@ namespace GeumEServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("WalkId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("WalkId");
 
                     b.ToTable("Places");
                 });
@@ -134,11 +138,11 @@ namespace GeumEServer.Migrations
                     b.Property<int>("Distance")
                         .HasColumnType("int");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("End")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Places")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
@@ -156,10 +160,15 @@ namespace GeumEServer.Migrations
             modelBuilder.Entity("GeumEServer.Dog", b =>
                 {
                     b.HasOne("GeumEServer.User", "User")
-                        .WithOne("Dog")
-                        .HasForeignKey("GeumEServer.Dog", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Dogs")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("GeumEServer.Place", b =>
+                {
+                    b.HasOne("GeumEServer.Walk", null)
+                        .WithMany("Places")
+                        .HasForeignKey("WalkId");
                 });
 
             modelBuilder.Entity("GeumEServer.Walk", b =>

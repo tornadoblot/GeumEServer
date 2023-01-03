@@ -31,8 +31,7 @@ namespace GeumEServer.Controllers
 
             Dog dog = new Dog
             {
-                UserId = owner.UserId,
-                UserEmail = owner.Email,
+                Email = owner.Email,
                 Name = info[1],
                 Species = info[2],
                 Birth = Convert.ToDateTime(info[3])
@@ -55,26 +54,26 @@ namespace GeumEServer.Controllers
         }
 
         [HttpGet("{email}")]
-        public Dog GetDog(string email)
+        public List<Dog> GetDog(string email)
         {
-            Dog results = _context.Dogs
-                .Where(item => item.UserEmail == email)
-                .FirstOrDefault();
+            List<Dog> results = _context.Dogs
+                .Where(item => item.Email == email)
+                .ToList();
 
             return results;
         }
 
         [HttpPut]
-        public bool UpdateDog([FromBody] Dog dog)
+        public bool UpdateDog([FromBody] Dog[] dog)
         {
             Dog findDog = _context.Dogs
-                .Where(item => item.UserEmail == dog.UserEmail)
+                .Where(item => item.Email == dog[0].Email && item.Name == dog[0].Name)
                 .FirstOrDefault();
 
             if (findDog == null)
                 return false;
 
-            findDog.Name = dog.Name;
+            findDog.Name = dog[1].Name;
 
             _context.SaveChanges();
 
@@ -82,10 +81,10 @@ namespace GeumEServer.Controllers
         }
 
         [HttpDelete("{email}")]
-        public bool DeleteDog(string email)
+        public bool DeleteDog(Dog dog)
         {
             var findDog = _context.Dogs
-                .Where(x => x.UserEmail == email)
+                .Where(x => x.Email == dog.Email && x.Name == dog.Name)
                 .FirstOrDefault();
 
             if (findDog == null)
