@@ -3,44 +3,41 @@ using System;
 using GeumEServer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GeumEServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230103200103_EditWalkPlace")]
-    partial class EditWalkPlace
+    [Migration("20230110180207_ResetMigration")]
+    partial class ResetMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.31")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("GeumEServer.Dog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Birth")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Species")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
@@ -56,12 +53,11 @@ namespace GeumEServer.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Note")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("recieveId")
                         .HasColumnType("int");
@@ -78,18 +74,17 @@ namespace GeumEServer.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("Area")
                         .HasColumnType("int");
 
                     b.Property<string>("Kind")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int?>("WalkId")
                         .HasColumnType("int");
@@ -105,23 +100,22 @@ namespace GeumEServer.Migrations
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Adress")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("UserId");
 
@@ -132,20 +126,19 @@ namespace GeumEServer.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("Distance")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

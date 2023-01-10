@@ -17,6 +17,8 @@
     <Compile Remove="Migrations\20230103185303_EditWalkDogUId.Designer.cs" />
     <Compile Remove="Migrations\20230103185431_EditWalkDogUrId.cs" />
     <Compile Remove="Migrations\20230103185431_EditWalkDogUrId.Designer.cs" />
+    <Compile Remove="Migrations\20230103200103_EditWalkPlace.cs" />
+    <Compile Remove="Migrations\20230103200103_EditWalkPlace.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +35,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

@@ -35,7 +35,7 @@ namespace GeumEServer
             //    (options => options.UseMySql(mySqlConnectionStr));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(mySqlConnectionStr));
+            options.UseMySql(mySqlConnectionStr));
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
