@@ -1,0 +1,30 @@
+﻿<Properties StartupConfiguration="{5B6A6690-BA8D-4902-BCDF-154E607951C0}|Default">
+  <MonoDevelop.Ide.ItemProperties.GeumEServer PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="GeumEServer/Controllers/DogController.cs">
+    <Files>
+      <File FileName="GeumEServer/Startup.cs" Line="39" Column="1" />
+      <File FileName="GeumEServer/Controllers/DogController.cs" Line="93" Column="1" />
+      <File FileName="GeumEServer/appsettings.json" Line="1" Column="1" />
+      <File FileName="GeumEServer/Controllers/UserController.cs" Line="1" Column="1" />
+      <File FileName="GeumEServer/Controllers/WalkController.cs" Line="1" Column="1" />
+      <File FileName="GeumEServer/Program.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="GeumEServer" expanded="True">
+            <Node name="GeumEServer" expanded="True" selected="True">
+              <Node name="Controllers" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+</Properties>

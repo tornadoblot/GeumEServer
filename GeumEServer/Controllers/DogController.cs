@@ -37,6 +37,16 @@ namespace GeumEServer.Controllers
                 Birth = Convert.ToDateTime(info[3])
             };
 
+            Dog dupchk = _context.Dogs
+                .Where( item =>
+                    item.Name == dog.Name &&
+                    item.Birth == dog.Birth &&
+                    item.Species == dog.Species)
+                .FirstOrDefault();
+
+            if (dupchk != null)
+                return null;
+
             _context.Dogs.Add(dog);
             _context.SaveChanges();
 
@@ -67,24 +77,32 @@ namespace GeumEServer.Controllers
         public bool UpdateDog([FromBody] Dog[] dog)
         {
             Dog findDog = _context.Dogs
-                .Where(item => item.Email == dog[0].Email && item.Name == dog[0].Name)
+                .Where(x =>
+                    x.Email == dog[0].Email &&
+                    x.Name == dog[0].Name &&
+                    x.Species == dog[0].Species &&
+                    x.Birth == dog[0].Birth)
                 .FirstOrDefault();
 
             if (findDog == null)
                 return false;
 
-            findDog.Name = dog[1].Name;
+            findDog = dog[1];
 
             _context.SaveChanges();
 
             return true;
         }
 
-        [HttpDelete("{email}")]
-        public bool DeleteDog(Dog dog)
+        [HttpDelete]
+        public bool DeleteDog([FromBody] Dog dog)
         {
             var findDog = _context.Dogs
-                .Where(x => x.Email == dog.Email && x.Name == dog.Name)
+                .Where(x =>
+                    x.Email == dog.Email &&
+                    x.Name == dog.Name &&
+                    x.Species == dog.Species &&
+                    x.Birth == dog.Birth)
                 .FirstOrDefault();
 
             if (findDog == null)
