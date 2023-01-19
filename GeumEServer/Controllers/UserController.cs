@@ -1,8 +1,11 @@
 ﻿using GeumEServer.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -68,6 +71,39 @@ namespace GeumEServer.Controllers
             _context.SaveChanges();
 
             return true;
+        }
+
+
+
+        [HttpPost("{email}")]
+        public string ImageUpload(IFormFile img, string email)
+        {
+            if (img == null)
+                return "null";
+
+            if (img.Length > 0)
+            {
+
+                //User findUser = _context.Users
+                //    .Where(x => x.Email == email)
+                //    .FirstOrDefault();
+
+                var path = Path.Combine($"Upload");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path); // 웹 서비스 내 업로드폴더가 없을 경우 자동생성을 위한 처리
+                }
+                var filename = email + img.FileName[img.FileName.IndexOf(".")..]; // 동일한 파일명이 있으면 덮어쓰거나, 오류가 날 수 있으므로 파일명을 바꾼다.
+                path = Path.Combine(path, filename);
+                using (var stream = System.IO.File.Create(path))
+                {
+                    img.CopyTo(stream);
+                }
+
+            }
+
+            return img.Length.ToString();
+
         }
 
         // Update Password

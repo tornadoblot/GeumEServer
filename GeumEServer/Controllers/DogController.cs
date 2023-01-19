@@ -74,7 +74,7 @@ namespace GeumEServer.Controllers
         }
 
         [HttpPut]
-        public bool UpdateDog([FromBody] Dog[] dog)
+        public Dog UpdateDog([FromBody] Dog[] dog)
         {
             Dog findDog = _context.Dogs
                 .Where(x =>
@@ -85,13 +85,15 @@ namespace GeumEServer.Controllers
                 .FirstOrDefault();
 
             if (findDog == null)
-                return false;
+                return null;
 
-            findDog = dog[1];
+            findDog.Name = dog[1].Name;
+            findDog.Species = dog[1].Species;
+            findDog.Birth = dog[1].Birth;
 
             _context.SaveChanges();
 
-            return true;
+            return findDog;
         }
 
         [HttpDelete]
