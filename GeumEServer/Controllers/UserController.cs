@@ -32,6 +32,43 @@ namespace GeumEServer.Controllers
             return user;
         }
 
+        [HttpPost("{email}")]
+        public string ImageUpload(IFormFile img, string email)
+        {
+            if (img.Length <= 0)
+                return "Image File is null";
+
+            User findUser = _context.Users
+                .Where(x => x.Email == email)
+                .FirstOrDefault();
+
+            if (findUser == null)
+                return "Can not find User";
+
+            var path = Path.Combine($"Upload");
+
+            if (findUser.HasImage)
+            {
+                var tmpFile = Directory.GetFiles(path, email + "*");
+                if (tmpFile.Length > 1)
+                    return "Can not find Existed Image File";
+
+                System.IO.File.Delete(tmpFile[0]);
+            }
+
+            var filename = email + img.FileName[img.FileName.IndexOf(".")..];
+            var filePath = Path.Combine(path, filename);
+            using (var stream = System.IO.File.Create(filePath))
+            {
+                img.CopyTo(stream);
+            }
+
+            findUser.HasImage = true;            
+            _context.SaveChanges();
+
+            return img.Length.ToString();
+        }
+
         // Read All User
         [HttpGet]
         public List<User> GetUsers()
@@ -54,6 +91,51 @@ namespace GeumEServer.Controllers
             return result;
         }
 
+        [HttpGet("{email}/image")]
+        public string GetUserImage(string email)
+        {
+            User findUser = _context.Users
+                .Where(x => x.Email == email)
+                .FirstOrDefault();
+
+            if (findUser == null)
+                return "Cannot find User";
+
+            var path = Path.Combine($"Upload");
+
+            string filePath;
+            if (findUser.HasImage)
+                filePath = Directory.GetFiles(path, email + "*")[0];
+            else
+                filePath =  Directory.GetFiles(path, "-.png")[0];
+
+            return Path.GetFullPath(filePath);
+        }
+
+        [HttpGet("{email}/imageDelete")]
+        public string DeleteUserImage(string email)
+        {
+            User findUser = _context.Users
+                .Where(x => x.Email == email)
+                .FirstOrDefault();
+
+            if (findUser == null)
+                return "Cannot find User";
+
+            var path = Path.Combine($"Upload");
+            var delFile = Directory.GetFiles(path, email + "*");
+
+            if (delFile.Length > 1)
+                return "Can not find Existed Image File";
+
+            System.IO.File.Delete(delFile[0]);
+            findUser.HasImage = false;
+
+            _context.SaveChanges();
+
+            return "Delete success";
+        }
+
         // Update
         [HttpPut]
         public bool UpdateUser([FromBody] User user)
@@ -71,39 +153,6 @@ namespace GeumEServer.Controllers
             _context.SaveChanges();
 
             return true;
-        }
-
-
-
-        [HttpPost("{email}")]
-        public string ImageUpload(IFormFile img, string email)
-        {
-            if (img == null)
-                return "null";
-
-            if (img.Length > 0)
-            {
-
-                //User findUser = _context.Users
-                //    .Where(x => x.Email == email)
-                //    .FirstOrDefault();
-
-                var path = Path.Combine($"Upload");
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path); // 웹 서비스 내 업로드폴더가 없을 경우 자동생성을 위한 처리
-                }
-                var filename = email + img.FileName[img.FileName.IndexOf(".")..]; // 동일한 파일명이 있으면 덮어쓰거나, 오류가 날 수 있으므로 파일명을 바꾼다.
-                path = Path.Combine(path, filename);
-                using (var stream = System.IO.File.Create(path))
-                {
-                    img.CopyTo(stream);
-                }
-
-            }
-
-            return img.Length.ToString();
-
         }
 
         // Update Password

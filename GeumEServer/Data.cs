@@ -20,7 +20,7 @@ namespace GeumEServer
         [Required]
         public string Adress { get; set; }
         public string Comment { get; set; }
-        public string ImageUrl { get; set; }
+        public bool HasImage { get; set; }
     }
 
     public class Dog
