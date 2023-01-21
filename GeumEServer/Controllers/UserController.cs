@@ -105,11 +105,15 @@ namespace GeumEServer.Controllers
 
             string filePath;
             if (findUser.HasImage)
+            {
                 filePath = Directory.GetFiles(path, email + "*")[0];
+                filePath = filePath[7..];
+            }                
             else
-                filePath =  Directory.GetFiles(path, "-.png")[0];
+                filePath = "Upload/-.png";
 
-            return Path.GetFullPath(filePath);
+
+            return "http://13.125.4.157:3200/images/" + filePath;
         }
 
         [HttpGet("{email}/imageDelete")]
