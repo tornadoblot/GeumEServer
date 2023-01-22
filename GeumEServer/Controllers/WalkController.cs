@@ -19,7 +19,7 @@ namespace GeumEServer.Controllers
         }
 
         [HttpPost]
-        public String CreateWalk(string[] info)
+        public string CreateWalk(string[] info)
         {
             User user = _context.Users
                 .Where(item => item.Email == info[0])
@@ -28,23 +28,6 @@ namespace GeumEServer.Controllers
             if (user == null) 
                 return "User does not exist";
 
-            List<Place> places = new List<Place>();
-
-            for (int i = info.Length - 1; i > 3; i--)
-            {
-                Place place = _context.Places
-                    .Where(item => item.Name == info[i])
-                    .FirstOrDefault();
-
-                if (place == null)
-                    return info[i] + " Place does not exist";
-
-                places.Add(place);
-            }
-
-            if (places.Count == 0)
-                places = null;
-
             Walk walk = new Walk
             {
                 User = user,
@@ -52,8 +35,37 @@ namespace GeumEServer.Controllers
                 Start = Convert.ToDateTime(info[1]),
                 End = Convert.ToDateTime(info[2]),
                 Distance = Convert.ToInt32(info[3]),
-                Places = places
             };
+
+            if (info.Length > 4)
+            {
+                int flag = Array.IndexOf(info, "-");
+
+                if (flag < 0)
+                    return "Can not find -";
+
+                for (int i = flag - 1; i > 3; i--)
+                {
+                    Place place = _context.Places
+                        .Where(item => item.Name == info[i])
+                        .FirstOrDefault();
+
+                    if (place == null)
+                        return info[i] + " Place does not exist";
+
+                    place.walk += w
+                }
+
+                for (int i = flag + 1; i < info.Length; i++)
+                {
+                    Dog dog = _context.Dogs
+                        .Where(item => item.Name == info[i])
+                        .FirstOrDefault();
+
+                    if (dog == null)
+                        return info[i] + " Dog does not exist";
+                }
+            }
 
             _context.Walks.Add(walk);
             _context.SaveChanges();
@@ -83,10 +95,12 @@ namespace GeumEServer.Controllers
         }
 
         [HttpDelete("{email}")]
-        public bool DeleteWalk(Walk walk)
+        public bool DeleteWalk(string email, [FromBody]DateTime start)
         {
             var findWalk = _context.Walks
-                .Where(x => x.Start == walk.Start)
+                .Where(x => 
+                    x.Email == email &&
+                    x.Start == start )
                 .FirstOrDefault();
 
             if (findWalk == null)

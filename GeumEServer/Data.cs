@@ -12,7 +12,6 @@ namespace GeumEServer
     {
         [Key]
         public int UserId { get; set; }
-        public ICollection<Dog> Dogs { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]
@@ -35,6 +34,7 @@ namespace GeumEServer
         public DateTime Birth { get; set; }
         [Required]
         public string Species { get; set; }
+        public Walk walk { get; set; }
     }
 
     public class Walk
@@ -50,7 +50,6 @@ namespace GeumEServer
         public DateTime End { get; set; }
         [Required]
         public int Distance { get; set; }
-        public ICollection<Place>? Places { get; set; }
     }
 
     public class Place
@@ -62,6 +61,7 @@ namespace GeumEServer
         public string Kind { get; set; }
         [Required]
         public int Area { get; set; }
+        public Walk walk { get; set; }
     }
 
     public class Msg
@@ -69,9 +69,9 @@ namespace GeumEServer
         [Key]
         public int Id { get; set; }
         [Required]
-        public int sendId { get; set; }
+        public string sendEmail { get; set; }
         [Required]
-        public int recieveId { get; set; }
+        public string recieveEmail { get; set; }
         [Required]
         public string Note { get; set; }
     }

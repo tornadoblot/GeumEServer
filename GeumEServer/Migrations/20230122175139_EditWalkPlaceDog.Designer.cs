@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GeumEServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230119170529_EditUserImg")]
-    partial class EditUserImg
+    [Migration("20230122175139_EditWalkPlaceDog")]
+    partial class EditWalkPlaceDog
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,9 +42,14 @@ namespace GeumEServer.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("WalkId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("WalkId");
 
                     b.ToTable("Dogs");
                 });
@@ -59,11 +64,13 @@ namespace GeumEServer.Migrations
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("recieveId")
-                        .HasColumnType("int");
+                    b.Property<string>("recieveEmail")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("sendId")
-                        .HasColumnType("int");
+                    b.Property<string>("sendEmail")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -158,12 +165,16 @@ namespace GeumEServer.Migrations
                     b.HasOne("GeumEServer.User", "User")
                         .WithMany("Dogs")
                         .HasForeignKey("UserId");
+
+                    b.HasOne("GeumEServer.Walk", null)
+                        .WithMany("DogsList")
+                        .HasForeignKey("WalkId");
                 });
 
             modelBuilder.Entity("GeumEServer.Place", b =>
                 {
                     b.HasOne("GeumEServer.Walk", null)
-                        .WithMany("Places")
+                        .WithMany("PlacesList")
                         .HasForeignKey("WalkId");
                 });
 

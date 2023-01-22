@@ -40,9 +40,14 @@ namespace GeumEServer.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("walkId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("walkId");
 
                     b.ToTable("Dogs");
                 });
@@ -57,11 +62,13 @@ namespace GeumEServer.Migrations
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("recieveId")
-                        .HasColumnType("int");
+                    b.Property<string>("recieveEmail")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("sendId")
-                        .HasColumnType("int");
+                    b.Property<string>("sendEmail")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
@@ -84,12 +91,12 @@ namespace GeumEServer.Migrations
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("WalkId")
+                    b.Property<int?>("walkId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WalkId");
+                    b.HasIndex("walkId");
 
                     b.ToTable("Places");
                 });
@@ -154,15 +161,19 @@ namespace GeumEServer.Migrations
             modelBuilder.Entity("GeumEServer.Dog", b =>
                 {
                     b.HasOne("GeumEServer.User", "User")
-                        .WithMany("Dogs")
+                        .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.HasOne("GeumEServer.Walk", "walk")
+                        .WithMany()
+                        .HasForeignKey("walkId");
                 });
 
             modelBuilder.Entity("GeumEServer.Place", b =>
                 {
-                    b.HasOne("GeumEServer.Walk", null)
-                        .WithMany("Places")
-                        .HasForeignKey("WalkId");
+                    b.HasOne("GeumEServer.Walk", "walk")
+                        .WithMany()
+                        .HasForeignKey("walkId");
                 });
 
             modelBuilder.Entity("GeumEServer.Walk", b =>
