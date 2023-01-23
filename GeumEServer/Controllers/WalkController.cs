@@ -19,58 +19,78 @@ namespace GeumEServer.Controllers
         }
 
         [HttpPost]
-        public string CreateWalk(string[] info)
+        public string CreateWalk(Walk walk, [FromQuery]string placename, [FromQuery]string doginfo)
         {
             User user = _context.Users
-                .Where(item => item.Email == info[0])
-                .FirstOrDefault(); 
+                .Where(item => item.Email == walk.Email)
+                .FirstOrDefault();
 
-            if (user == null) 
+            if (user == null)
                 return "User does not exist";
-
-            Walk walk = new Walk
-            {
-                User = user,
-                Email = user.Email,
-                Start = Convert.ToDateTime(info[1]),
-                End = Convert.ToDateTime(info[2]),
-                Distance = Convert.ToInt32(info[3]),
-            };
-
-            if (info.Length > 4)
-            {
-                int flag = Array.IndexOf(info, "-");
-
-                if (flag < 0)
-                    return "Can not find -";
-
-                for (int i = flag - 1; i > 3; i--)
-                {
-                    Place place = _context.Places
-                        .Where(item => item.Name == info[i])
-                        .FirstOrDefault();
-
-                    if (place == null)
-                        return info[i] + " Place does not exist";
-
-                    place.walk += w
-                }
-
-                for (int i = flag + 1; i < info.Length; i++)
-                {
-                    Dog dog = _context.Dogs
-                        .Where(item => item.Name == info[i])
-                        .FirstOrDefault();
-
-                    if (dog == null)
-                        return info[i] + " Dog does not exist";
-                }
-            }
 
             _context.Walks.Add(walk);
             _context.SaveChanges();
 
-            return "success"; 
+            int workId = _context.Walks
+                .Where(item =>
+                    item.Email == walk.Email &&
+                    item.Start == walk.Start)
+                .FirstOrDefault().Id;
+
+            string[] placelist;
+            if (placename != null)
+                placelist = placename.Split(',');
+            else
+                placelist = new string[0];
+
+            for (int i = 0; i < placelist.Length; i++)
+            {
+                Place place = _context.Places
+                    .Where(item => item.Name == placelist[i])
+                    .FirstOrDefault();
+
+                if (place == null)
+                    return "Place does not exist";
+
+                WalkPlace walkPlace = new WalkPlace()
+                {
+                    WalkId = workId,
+                    PlaceId = place.Id
+                };
+
+                _context.WalkPlaces.Add(walkPlace);
+            }
+
+
+            string[] doglist;
+            if (doginfo != null)
+                doglist = doginfo.Split(',');
+            else
+                doglist = new string[0];
+
+            for (int i = 0; i < doglist.Length; i += 2)
+            {
+                Dog dog = _context.Dogs
+                    .Where(item => 
+                        item.Name == doglist[i] &&
+                        item.Email == doglist[i + 1])
+                    .FirstOrDefault();
+
+                if (dog == null)
+                    return "Dog does not exist";
+
+                WalkDog walkDog = new WalkDog()
+                {
+                    WalkId = workId,
+                    DogId = dog.Id
+                };
+
+                _context.WalkDogs.Add(walkDog);
+            }
+
+
+            _context.SaveChanges();
+            return "success";
         }
 
         [HttpGet]
@@ -92,6 +112,58 @@ namespace GeumEServer.Controllers
                 .ToList();
 
             return result;
+        }
+
+        [HttpGet("{workId}/place")]
+        public List<Place> GetWalkPlace(int workId)
+        {
+            List<Place> res = new List<Place>();
+
+            List<WalkPlace> workPlace = _context.WalkPlaces
+                .Where(item => item.WalkId == workId)
+                .ToList();
+
+            if (workPlace == null)
+            {
+                return null;
+            }
+
+            foreach (var i in workPlace)
+            {
+                Place place = _context.Places
+                    .Where(item => item.Id == i.PlaceId)
+                    .FirstOrDefault();
+
+                res.Add(place);
+            }
+
+            return res;
+        }
+
+        [HttpGet("{workId}/dog")]
+        public List<Dog> GetWalkDog(int workId)
+        {
+            List<Dog> res = new List<Dog>();
+
+            List<WalkDog> workDog = _context.WalkDogs
+                .Where(item => item.WalkId == workId)
+                .ToList();
+
+            if (workDog == null)
+            {
+                return null;
+            }
+
+            foreach (var i in workDog)
+            {
+                Dog dog = _context.Dogs
+                    .Where(item => item.Id == i.DogId)
+                    .FirstOrDefault();
+
+                res.Add(dog);
+            }
+
+            return res;
         }
 
         [HttpDelete("{email}")]

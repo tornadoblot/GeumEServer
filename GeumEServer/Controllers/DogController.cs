@@ -20,28 +20,20 @@ namespace GeumEServer.Controllers
         }
 
         [HttpPost]
-        public Dog CreateDog([FromBody] string[] info)
+        public Dog CreateDog([FromBody] Dog dog)
         {
             User owner = _context.Users
-                .Where(item => item.Email == info[0])
+                .Where(item => item.Email == dog.Email)
                 .FirstOrDefault();
 
             if (owner == null)
                 return null;
 
-            Dog dog = new Dog
-            {
-                Email = owner.Email,
-                Name = info[1],
-                Species = info[2],
-                Birth = Convert.ToDateTime(info[3])
-            };
-
             Dog dupchk = _context.Dogs
-                .Where( item =>
-                    item.Name == dog.Name &&
-                    item.Birth == dog.Birth &&
-                    item.Species == dog.Species)
+                .Where(item =>
+                   item.Name == dog.Name &&
+                   item.Birth == dog.Birth &&
+                   item.Species == dog.Species)
                 .FirstOrDefault();
 
             if (dupchk != null)
@@ -49,6 +41,13 @@ namespace GeumEServer.Controllers
 
             _context.Dogs.Add(dog);
             _context.SaveChanges();
+
+            int dogId = _context.Dogs
+                .Where(item =>
+                   item.Name == dog.Name &&
+                   item.Birth == dog.Birth &&
+                   item.Species == dog.Species)
+                .FirstOrDefault().Id;
 
             return dog;
         }
@@ -79,9 +78,7 @@ namespace GeumEServer.Controllers
             Dog findDog = _context.Dogs
                 .Where(x =>
                     x.Email == dog[0].Email &&
-                    x.Name == dog[0].Name &&
-                    x.Species == dog[0].Species &&
-                    x.Birth == dog[0].Birth)
+                    x.Name == dog[0].Name)
                 .FirstOrDefault();
 
             if (findDog == null)

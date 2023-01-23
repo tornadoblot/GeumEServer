@@ -3,14 +3,16 @@ using System;
 using GeumEServer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GeumEServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230123080232_NewInit")]
+    partial class NewInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,46 +140,24 @@ namespace GeumEServer.Migrations
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Walks");
                 });
 
-            modelBuilder.Entity("GeumEServer.WalkDog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("DogId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WalkId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("WalkDogs");
-                });
-
-            modelBuilder.Entity("GeumEServer.WalkPlace", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlaceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WalkId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("WalkPlaces");
-                });
-
             modelBuilder.Entity("GeumEServer.Dog", b =>
+                {
+                    b.HasOne("GeumEServer.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("GeumEServer.Walk", b =>
                 {
                     b.HasOne("GeumEServer.User", "User")
                         .WithMany()

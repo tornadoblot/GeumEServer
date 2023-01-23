@@ -26,7 +26,6 @@ namespace GeumEServer
     {
         [Key]
         public int Id { get; set; }
-        public User User { get; set; }
         public string Email { get; set; }
         [Required]
         public string Name { get; set; }
@@ -34,15 +33,12 @@ namespace GeumEServer
         public DateTime Birth { get; set; }
         [Required]
         public string Species { get; set; }
-        public Walk walk { get; set; }
     }
 
     public class Walk
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        public User User { get; set; }
         public string Email { get; set; }
         [Required]
         public DateTime Start { get; set; }
@@ -50,6 +46,23 @@ namespace GeumEServer
         public DateTime End { get; set; }
         [Required]
         public int Distance { get; set; }
+
+    }
+
+    public class WalkPlace
+    {
+        [Key]
+        public int Id { get; set; }
+        public int WalkId { get; set; }
+        public int PlaceId { get; set; }
+    }
+
+    public class WalkDog
+    {
+        [Key]
+        public int Id { get; set; }
+        public int WalkId { get; set; }
+        public int DogId { get; set; }
     }
 
     public class Place
@@ -61,7 +74,6 @@ namespace GeumEServer
         public string Kind { get; set; }
         [Required]
         public int Area { get; set; }
-        public Walk walk { get; set; }
     }
 
     public class Msg

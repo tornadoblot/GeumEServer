@@ -145,7 +145,9 @@ namespace GeumEServer.Controllers
         public bool UpdateUser([FromBody] User user)
         {
             User findUser = _context.Users
-                .Where(item => item.Email == user.Email)
+                .Where(item => 
+                    item.Email == user.Email &&
+                    item.Password == user.Password)
                 .FirstOrDefault();
 
             if (findUser == null)

@@ -21,6 +21,12 @@
     <Compile Remove="Migrations\20230103200103_EditWalkPlace.Designer.cs" />
     <Compile Remove="Migrations\20230122181033_AddForeignKey.cs" />
     <Compile Remove="Migrations\20230122181033_AddForeignKey.Designer.cs" />
+    <Compile Remove="Migrations\20230123053715_EditRelationship.cs" />
+    <Compile Remove="Migrations\20230123053715_EditRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20230123055253_EditRelationship.cs" />
+    <Compile Remove="Migrations\20230123055253_EditRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20230123112556_AddUserdog.cs" />
+    <Compile Remove="Migrations\20230123112556_AddUserdog.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

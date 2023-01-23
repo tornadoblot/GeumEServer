@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GeumEServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230122182239_EditRelation")]
-    partial class EditRelation
+    [Migration("20230123110435_Editworkplacedog")]
+    partial class Editworkplacedog
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,14 +42,9 @@ namespace GeumEServer.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("walkId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("walkId");
 
                     b.ToTable("Dogs");
                 });
@@ -93,12 +88,7 @@ namespace GeumEServer.Migrations
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("walkId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("walkId");
 
                     b.ToTable("Places");
                 });
@@ -150,7 +140,7 @@ namespace GeumEServer.Migrations
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -160,31 +150,52 @@ namespace GeumEServer.Migrations
                     b.ToTable("Walks");
                 });
 
+            modelBuilder.Entity("GeumEServer.WalkDog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("DogId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WalkId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WalkDogs");
+                });
+
+            modelBuilder.Entity("GeumEServer.WalkPlace", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WalkId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WalkPlaces");
+                });
+
             modelBuilder.Entity("GeumEServer.Dog", b =>
                 {
                     b.HasOne("GeumEServer.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-
-                    b.HasOne("GeumEServer.Walk", "walk")
-                        .WithMany()
-                        .HasForeignKey("walkId");
-                });
-
-            modelBuilder.Entity("GeumEServer.Place", b =>
-                {
-                    b.HasOne("GeumEServer.Walk", "walk")
-                        .WithMany()
-                        .HasForeignKey("walkId");
                 });
 
             modelBuilder.Entity("GeumEServer.Walk", b =>
                 {
                     b.HasOne("GeumEServer.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
