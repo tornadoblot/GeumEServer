@@ -42,7 +42,8 @@ namespace GeumEServer.Controllers
             if (findUser == null)
                 return "Can not find User";
 
-            var path = Path.Combine($"Upload");
+            string path = "/home/ec2-user/GeumEServer/GeumEServer/Upload";
+            //string path = "C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\Upload"
 
             if (findUser.HasImage)
             {
@@ -92,7 +93,8 @@ namespace GeumEServer.Controllers
             if (findUser == null)
                 return "Cannot find User";
 
-            var path = Path.Combine($"Upload");
+            string path = "/home/ec2-user/GeumEServer/GeumEServer/Upload";
+            //string path = "C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\Upload"
 
             string filePath;
             if (findUser.HasImage)
@@ -113,7 +115,8 @@ namespace GeumEServer.Controllers
             if (findUser == null)
                 return "Cannot find User";
 
-            var path = Path.Combine($"Upload");
+            string path = "/home/ec2-user/GeumEServer/GeumEServer/Upload";
+            //string path = "C:\Users\Newcl\Desktop\GeumEServer\GeumEServer\Upload"
             var delFile = Directory.GetFiles(path, email + "*");
 
             if (delFile.Length > 1)
