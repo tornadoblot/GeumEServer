@@ -31,63 +31,13 @@ namespace GeumEServer.Controllers
             _context.Walks.Add(walk);
             _context.SaveChanges();
 
-            int workId = _context.Walks
-                .Where(item =>
-                    item.Email == walk.Email &&
-                    item.Start == walk.Start)
-                .FirstOrDefault().Id;
+            int workId = GetWalkId(walk.Email, walk.Start);
 
-            string[] placelist;
-            if (placename != null)
-                placelist = placename.Split(',');
-            else
-                placelist = new string[0];
+            if (AddWalkPlace(workId, placename))
+                return "Place does not exist";
 
-            for (int i = 0; i < placelist.Length; i++)
-            {
-                Place place = _context.Places
-                    .Where(item => item.Name == placelist[i])
-                    .FirstOrDefault();
-
-                if (place == null)
-                    return "Place does not exist";
-
-                WalkPlace walkPlace = new WalkPlace()
-                {
-                    WalkId = workId,
-                    PlaceId = place.Id
-                };
-
-                _context.WalkPlaces.Add(walkPlace);
-            }
-
-
-            string[] doglist;
-            if (doginfo != null)
-                doglist = doginfo.Split(',');
-            else
-                doglist = new string[0];
-
-            for (int i = 0; i < doglist.Length; i += 2)
-            {
-                Dog dog = _context.Dogs
-                    .Where(item => 
-                        item.Name == doglist[i] &&
-                        item.Email == doglist[i + 1])
-                    .FirstOrDefault();
-
-                if (dog == null)
-                    return "Dog does not exist";
-
-                WalkDog walkDog = new WalkDog()
-                {
-                    WalkId = workId,
-                    DogId = dog.Id
-                };
-
-                _context.WalkDogs.Add(walkDog);
-            }
-
+            if (AddDogPlace(workId, doginfo))
+                return "Dog does not exist";
 
             _context.SaveChanges();
             return "success";
@@ -182,6 +132,75 @@ namespace GeumEServer.Controllers
             _context.SaveChanges();
 
             return true;
+        }
+
+        public int GetWalkId(string email, DateTime start)
+        {
+            return _context.Walks
+                .Where(item =>
+                    item.Email == email &&
+                    item.Start == start)
+                .FirstOrDefault().Id;
+        }
+
+        public bool AddWalkPlace(int workId, string placename)
+        {
+            string[] placelist;
+            if (placename != null)
+                placelist = placename.Split(',');
+            else
+                placelist = new string[0];
+
+            for (int i = 0; i < placelist.Length; i++)
+            {
+                Place place = _context.Places
+                    .Where(item => item.Name == placelist[i])
+                    .FirstOrDefault();
+
+                if (place == null)
+                    return true;
+
+                WalkPlace walkPlace = new WalkPlace()
+                {
+                    WalkId = workId,
+                    PlaceId = place.Id
+                };
+
+                _context.WalkPlaces.Add(walkPlace);
+            }
+
+            return false;
+        }
+
+        public bool AddDogPlace(int workId, string doginfo)
+        {
+            string[] doglist;
+            if (doginfo != null)
+                doglist = doginfo.Split(',');
+            else
+                doglist = new string[0];
+
+            for (int i = 0; i < doglist.Length; i += 2)
+            {
+                Dog dog = _context.Dogs
+                    .Where(item =>
+                        item.Name == doglist[i] &&
+                        item.Email == doglist[i + 1])
+                    .FirstOrDefault();
+
+                if (dog == null)
+                    return true;
+
+                WalkDog walkDog = new WalkDog()
+                {
+                    WalkId = workId,
+                    DogId = dog.Id
+                };
+
+                _context.WalkDogs.Add(walkDog);
+            }
+
+            return false;
         }
     }
 }

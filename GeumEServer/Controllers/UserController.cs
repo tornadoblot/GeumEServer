@@ -38,10 +38,7 @@ namespace GeumEServer.Controllers
             if (img.Length <= 0)
                 return "Image File is null";
 
-            User findUser = _context.Users
-                .Where(x => x.Email == email)
-                .FirstOrDefault();
-
+            User findUser = FindUser(email);
             if (findUser == null)
                 return "Can not find User";
 
@@ -84,20 +81,14 @@ namespace GeumEServer.Controllers
         [HttpGet("{email}")]
         public User GetUser(string email)
         {
-            User result = _context.Users
-                .Where(item => item.Email == email)
-                .FirstOrDefault();
-
+            User result = FindUser(email);
             return result;
         }
 
         [HttpGet("{email}/image")]
         public string GetUserImage(string email)
         {
-            User findUser = _context.Users
-                .Where(x => x.Email == email)
-                .FirstOrDefault();
-
+            User findUser = FindUser(email);
             if (findUser == null)
                 return "Cannot find User";
 
@@ -112,17 +103,13 @@ namespace GeumEServer.Controllers
             else
                 filePath = "Upload/-.png";
 
-
             return "http://13.125.4.157:3200/images/" + filePath;
         }
 
         [HttpGet("{email}/imageDelete")]
         public string DeleteUserImage(string email)
         {
-            User findUser = _context.Users
-                .Where(x => x.Email == email)
-                .FirstOrDefault();
-
+            User findUser = FindUser(email);
             if (findUser == null)
                 return "Cannot find User";
 
@@ -144,12 +131,7 @@ namespace GeumEServer.Controllers
         [HttpPut]
         public bool UpdateUser([FromBody] User user)
         {
-            User findUser = _context.Users
-                .Where(item => 
-                    item.Email == user.Email &&
-                    item.Password == user.Password)
-                .FirstOrDefault();
-
+            User findUser = FindUser(user.Email, user.Password);
             if (findUser == null)
                 return false;
 
@@ -165,10 +147,7 @@ namespace GeumEServer.Controllers
         [HttpPut("password")]
         public bool UpdateUserPassword([FromBody]string[] info)
         {
-            User findUser = _context.Users
-                .Where(item => item.Email == info[0])
-                .FirstOrDefault();
-
+            User findUser = FindUser(info[0]);
             if (findUser == null)
                 return false;
 
@@ -183,10 +162,7 @@ namespace GeumEServer.Controllers
         [HttpDelete("{email}")]
         public bool DeleteUser(string email)
         {
-            var findUser = _context.Users
-                .Where(x => x.Email == email)
-                .FirstOrDefault();
-
+            var findUser = FindUser(email);
             if (findUser == null)
                 return false;
 
@@ -195,5 +171,26 @@ namespace GeumEServer.Controllers
 
             return true;
         }
+
+        public User FindUser(string email)
+        {
+            User findUser = _context.Users
+                .Where(x => x.Email == email)
+                .FirstOrDefault();
+
+            return findUser;
+        }
+
+        public User FindUser(string email, string password)
+        {
+            User findUser = _context.Users
+                .Where(x => 
+                    x.Email == email &&
+                    x.Password == password)
+                .FirstOrDefault();
+
+            return findUser;
+        }
     }
 }
+
