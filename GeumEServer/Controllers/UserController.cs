@@ -35,7 +35,7 @@ namespace GeumEServer.Controllers
         [HttpPost("{email}")]
         public string ImageUpload(IFormFile img, string email)
         {
-            if (img.Length == null)
+            if (img == null)
                 return "Image File is null";
 
             User findUser = FindUser(email);
