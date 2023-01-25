@@ -42,8 +42,9 @@ namespace GeumEServer.Controllers
             if (findUser == null)
                 return "Can not find User";
 
-            string path = Directory.GetCurrentDirectory();
-            path = Path.Combine(path, "Upload");
+            string path = Path.Combine($"Upload");
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
 
             if (findUser.HasImage)
             {
@@ -87,25 +88,27 @@ namespace GeumEServer.Controllers
         }
 
         [HttpGet("{email}/image")]
-        public string GetUserImage(string email)
+        public IActionResult GetUserImage(string email)
         {
             User findUser = FindUser(email);
             if (findUser == null)
-                return "Cannot find User";
+                return Content("User does not exists");
 
-            string path = Directory.GetCurrentDirectory();
-            path = Path.Combine(path, "Upload");
+            string path = Path.Combine($"Upload");
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
 
-            string filePath;
             if (findUser.HasImage)
             {
-                filePath = Directory.GetFiles(path, email + "*")[0];
-                filePath = filePath[7..];
-            }                
-            else
-                filePath = "Upload/-.png";
+                string filePath = Directory.GetFiles(path, email + "*")[0];
+                string fileType = filePath.Substring(filePath.IndexOf("com") + 4);
 
-            return "http://13.125.4.157:3200/images/" + filePath;
+                Byte[] b = System.IO.File.ReadAllBytes(filePath);
+                return File(b, "image/" + fileType);
+            }
+            else
+                return Content("User Image does not exists");
+
         }
 
         [HttpGet("{email}/imageDelete")]
