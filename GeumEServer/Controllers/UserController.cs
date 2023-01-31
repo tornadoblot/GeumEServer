@@ -26,6 +26,10 @@ namespace GeumEServer.Controllers
         [HttpPost]
         public User CreateUser(User user)
         {
+            User findUser = FindUser(user.Email);
+            if (findUser == null)
+                return null;
+
             _context.Users.Add(user);
             _context.SaveChanges();
 
@@ -62,7 +66,7 @@ namespace GeumEServer.Controllers
                 img.CopyTo(stream);
             }
 
-            findUser.HasImage = true;            
+            findUser.HasImage = true;
             _context.SaveChanges();
 
             return img.Length.ToString();
@@ -110,6 +114,33 @@ namespace GeumEServer.Controllers
                 return Content("User Image does not exists");
 
         }
+
+
+        [HttpGet("{email}/dog")]
+        public Dog[] GetUserDog(string email)
+        {
+            User findUser = FindUser(email);
+            if (findUser == null)
+                return null;
+
+            List<UserDog> dogIdList = _context.UserDogs
+                                .Where(x => x.UserId == findUser.UserId)
+                                .ToList();
+
+            List<Dog> res = new List<Dog>();
+
+            foreach(var i in dogIdList)
+            {
+                res.Add(
+                    _context.Dogs
+                    .Where(x => x.Id == i.DogId)
+                    .FirstOrDefault()
+                    );
+            }
+
+            return res.ToArray();
+        }
+
 
         [HttpGet("{email}/imageDelete")]
         public string DeleteUserImage(string email)

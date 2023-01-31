@@ -49,6 +49,14 @@ namespace GeumEServer.Controllers
                    item.Species == dog.Species)
                 .FirstOrDefault().Id;
 
+            _context.UserDogs.Add(
+                new UserDog
+                {
+                    DogId = dogId,
+                    UserId = owner.UserId
+                }) ;
+            _context.SaveChanges();
+
             return dog;
         }
 

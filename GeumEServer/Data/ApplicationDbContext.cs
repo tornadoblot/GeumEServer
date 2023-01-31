@@ -17,6 +17,7 @@ namespace GeumEServer.Data
         public DbSet<WalkPlace> WalkPlaces { get; set; }
 
         public DbSet<WalkDog> WalkDogs { get; set; }
+        public DbSet<UserDog> UserDogs { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             :base(options)
         {

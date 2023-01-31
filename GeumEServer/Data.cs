@@ -21,7 +21,6 @@ namespace GeumEServer
         public string Comment { get; set; }
         public bool HasImage { get; set; }
     }
-
     public class Dog
     {
         [Key]
@@ -33,6 +32,14 @@ namespace GeumEServer
         public DateTime Birth { get; set; }
         [Required]
         public string Species { get; set; }
+    }
+
+    public class UserDog
+    {
+        [Key]
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int DogId { get; set; }
     }
 
     public class Walk
