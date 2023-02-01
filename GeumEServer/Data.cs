@@ -79,8 +79,11 @@ namespace GeumEServer
         [Required]
         public string Name { get; set; }
         public string Kind { get; set; }
+        public string Adress { get; set; }
         [Required]
         public int Area { get; set; }
+        public decimal lat { get; set; }
+        public decimal log { get; set; }
     }
 
     public class Msg
