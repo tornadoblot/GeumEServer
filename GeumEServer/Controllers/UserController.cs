@@ -27,7 +27,7 @@ namespace GeumEServer.Controllers
         public User CreateUser(User user)
         {
             User findUser = FindUser(user.Email);
-            if (findUser == null)
+            if (findUser != null)
                 return null;
 
             _context.Users.Add(user);
