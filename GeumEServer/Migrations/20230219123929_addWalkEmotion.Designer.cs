@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GeumEServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230201165137_addplacelatlog")]
-    partial class addplacelatlog
+    [Migration("20230219123929_addWalkEmotion")]
+    partial class addWalkEmotion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,6 +72,9 @@ namespace GeumEServer.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("Adress")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("Area")
                         .HasColumnType("int");
@@ -150,6 +153,9 @@ namespace GeumEServer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Emotion")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<DateTime>("End")

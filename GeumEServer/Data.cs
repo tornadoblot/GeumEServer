@@ -53,7 +53,7 @@ namespace GeumEServer
         public DateTime End { get; set; }
         [Required]
         public int Distance { get; set; }
-
+        public string Emotion { get; set; }
     }
 
     public class WalkPlace

@@ -153,6 +153,9 @@ namespace GeumEServer.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("Emotion")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<DateTime>("End")
                         .HasColumnType("datetime(6)");
 
