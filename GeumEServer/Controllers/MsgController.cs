@@ -49,7 +49,7 @@ namespace GeumEServer.Controllers
         public List<Msg> GetSendMsgs(string email)
         {
             var results = _context.Msgs
-                .Where(item => item.recieveEmail == email)
+                .Where(item => item.sendEmail == email)
                 .ToList();
 
             return results;

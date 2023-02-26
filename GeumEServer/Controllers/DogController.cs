@@ -20,14 +20,14 @@ namespace GeumEServer.Controllers
         }
 
         [HttpPost]
-        public Dog CreateDog([FromBody] Dog dog)
+        public string CreateDog([FromBody] Dog dog)
         {
             User owner = _context.Users
                 .Where(item => item.Email == dog.Email)
                 .FirstOrDefault();
 
             if (owner == null)
-                return null;
+                return "Cannot Find owner";
 
             Dog dupchk = _context.Dogs
                 .Where(item =>
@@ -37,7 +37,7 @@ namespace GeumEServer.Controllers
                 .FirstOrDefault();
 
             if (dupchk != null)
-                return null;
+                return "Dog Duplicated";
 
             _context.Dogs.Add(dog);
             _context.SaveChanges();
@@ -57,7 +57,7 @@ namespace GeumEServer.Controllers
                 }) ;
             _context.SaveChanges();
 
-            return dog;
+            return "Create Dog " + dog.Name;
         }
 
         [HttpGet]
