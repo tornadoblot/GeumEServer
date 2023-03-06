@@ -96,5 +96,7 @@ namespace GeumEServer
         public string recieveEmail { get; set; }
         [Required]
         public string Note { get; set; }
+        public bool sendDel { get; set; }
+        public bool recDel { get; set; }
     }
 }

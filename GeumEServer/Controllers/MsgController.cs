@@ -26,7 +26,7 @@ namespace GeumEServer.Controllers
                 .Where(item => item.Email == msg.recieveEmail)
                 .FirstOrDefault();
 
-            if(user == null)
+            if (user == null)
                 return "User does not exist";
 
             _context.Msgs.Add(msg);
@@ -53,6 +53,45 @@ namespace GeumEServer.Controllers
                 .ToList();
 
             return results;
+        }
+
+        [HttpDelete("{sendEmail}/{recvEmail}")]
+        public int DeleteMsgs(string sendEmail, string recvEmail)
+        {
+            int cnt = 0;
+
+            var sendRes = _context.Msgs
+                .Where(i => i.sendEmail == sendEmail && i.recieveEmail == recvEmail)
+                .ToList();
+
+            var recvRes = _context.Msgs
+                .Where(i => i.sendEmail == recvEmail && i.recieveEmail == sendEmail)
+                .ToList();
+
+            foreach (var i in sendRes)
+            {
+                i.sendDel = true;
+
+                if(i.sendDel == i.recDel)
+                {
+                    _context.Msgs.Remove(i);
+                    cnt++;
+                }
+            }
+
+            foreach (var i in recvRes)
+            {
+                i.recDel = true;
+
+                if (i.sendDel == i.recDel)
+                {
+                    _context.Msgs.Remove(i);
+                    cnt++;
+                }
+            }
+
+            _context.SaveChanges();
+            return cnt;
         }
     }
 }

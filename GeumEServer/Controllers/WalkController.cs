@@ -134,6 +134,38 @@ namespace GeumEServer.Controllers
             return true;
         }
 
+
+        [HttpGet("path")]
+        public string RecommendPath([FromQuery]decimal lat, [FromQuery]decimal log)
+        {
+            decimal[,] res = new decimal[3, 2];
+            decimal[] resDis = new decimal[3];
+            for (int i = 0; i < 3; i++)
+            {
+                resDis[i] = 99999;
+            }
+
+            foreach (var i in _context.Places)
+            {
+                decimal distance = GetDistance(lat, log, i.lat, i.log);
+
+                for (int j = 0; j < 3; j++)
+                {
+                    if (resDis[j] > distance)
+                    {
+                        resDis[j] = distance;
+                        res[j, 0] = i.lat;
+                        res[j, 1] = i.log;
+                        break;
+                    }
+                }
+            }
+
+            return res[0, 1].ToString() + "," + res[0, 0].ToString() + "_"
+                   + res[1, 1].ToString() + "," + res[1, 0].ToString() + "_"
+                   + res[2, 1].ToString() + "," + res[2, 0].ToString();
+        }
+
         public int GetWalkId(string email, DateTime start)
         {
             return _context.Walks
@@ -201,6 +233,11 @@ namespace GeumEServer.Controllers
             }
 
             return false;
+        }
+
+        private decimal GetDistance(decimal lat, decimal log, decimal lat2, decimal log2)
+        {
+            return Math.Abs(lat - lat2) + Math.Abs(log - log2);
         }
     }
 }
