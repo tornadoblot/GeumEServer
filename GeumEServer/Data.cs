@@ -56,6 +56,15 @@ namespace GeumEServer
         public string Emotion { get; set; }
     }
 
+    public class Walking
+    {
+        [Key]
+        public int Id { get; set; }
+        public int dogId { get; set; }
+        public decimal lat { get; set; }
+        public decimal log { get; set; }
+    }
+
     public class WalkPlace
     {
         [Key]

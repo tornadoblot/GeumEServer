@@ -18,6 +18,59 @@ namespace GeumEServer.Controllers
             _context = context;
         }
 
+        [HttpPost("walking")]
+        public string StartWalk(Walking walking)
+        {
+            _context.Walkings.Add(walking);
+            _context.SaveChanges();
+
+            return "Start Walk..";
+        }
+
+        [HttpGet("walking")]
+        public List<Walking> GetWalking()
+        {
+            List<Walking> results = _context.Walkings
+                .ToList();
+
+            return results;
+        }
+
+        [HttpPut("walking")]
+        public string UpdateWalking(Walking walking)
+        {
+            Walking findWalking = _context.Walkings
+                .Where(i => i.dogId == walking.dogId)
+                .FirstOrDefault();
+
+            if (findWalking == null)
+                return "Cannot find Walking";
+
+            findWalking.lat = walking.lat;
+            findWalking.log = walking.log;
+
+            _context.SaveChanges();
+
+            return "Update Complete";
+        }
+
+        [HttpDelete("walking")]
+        public string EndWalk(Walking walking)
+        {
+            Walking findWalking = _context.Walkings
+                .Where(i => i.dogId == walking.dogId)
+                .FirstOrDefault();
+
+            if (findWalking == null)
+                return "Cannot find Walking";
+
+            _context.Walkings.Remove(findWalking);
+            _context.SaveChanges();
+
+            return "End Walk..";
+        }
+
+
         [HttpPost]
         public string CreateWalk(Walk walk, [FromQuery]string placename, [FromQuery]string doginfo)
         {
