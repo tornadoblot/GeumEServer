@@ -1,7 +1,9 @@
 ﻿using GeumEServer.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -187,7 +189,6 @@ namespace GeumEServer.Controllers
             return true;
         }
 
-
         [HttpGet("path")]
         public string RecommendPath([FromQuery]decimal lat, [FromQuery]decimal log)
         {
@@ -206,6 +207,13 @@ namespace GeumEServer.Controllers
                 {
                     if (resDis[j] > distance)
                     {
+                        for(int k = 2; k > j; k--)
+                        {
+                            resDis[k] = resDis[k - 1];
+                            res[k, 0] = res[k - 1, 0];
+                            res[k, 1] = res[k - 1, 1];
+                        }
+
                         resDis[j] = distance;
                         res[j, 0] = i.lat;
                         res[j, 1] = i.log;
@@ -217,6 +225,26 @@ namespace GeumEServer.Controllers
             return res[0, 1].ToString() + "," + res[0, 0].ToString() + "_"
                    + res[1, 1].ToString() + "," + res[1, 0].ToString() + "_"
                    + res[2, 1].ToString() + "," + res[2, 0].ToString();
+        }
+
+        [HttpPost("{walkname}")]
+        public string VideoUpload(IFormFile vid, string walkname)
+        {
+            if (vid == null)
+                return "File is null";
+
+            string path = Path.Combine($"Upload");
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            var filename = walkname + vid.FileName[vid.FileName.IndexOf(".")..];
+            var filePath = Path.Combine(path, filename);
+            using (var stream = System.IO.File.Create(filePath))
+            {
+                vid.CopyTo(stream);
+            }
+
+            return vid.Length.ToString();
         }
 
         public int GetWalkId(string email, DateTime start)
