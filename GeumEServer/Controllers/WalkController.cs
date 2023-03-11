@@ -222,8 +222,7 @@ namespace GeumEServer.Controllers
                 }
             }
 
-            return res[0, 1].ToString() + "," + res[0, 0].ToString() + "_"
-                   + res[1, 1].ToString() + "," + res[1, 0].ToString() + "_"
+            return   res[1, 1].ToString() + "," + res[1, 0].ToString() + "_"
                    + res[2, 1].ToString() + "," + res[2, 0].ToString();
         }
 
