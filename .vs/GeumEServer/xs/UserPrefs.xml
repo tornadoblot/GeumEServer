@@ -1,22 +1,26 @@
 ﻿<Properties StartupConfiguration="{5B6A6690-BA8D-4902-BCDF-154E607951C0}|Default">
-  <MonoDevelop.Ide.ItemProperties.GeumEServer PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="GeumEServer/Controllers/UserController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="GeumEServer/Controllers/ReportController.cs">
     <Files>
-      <File FileName="GeumEServer/Controllers/UserController.cs" Line="59" Column="40" />
-      <File FileName="GeumEServer/Controllers/WalkController.cs" />
-      <File FileName="GeumEServer/Data/ApplicationDbContext.cs" />
-      <File FileName="GeumEServer/Controllers/DogController.cs" Line="38" Column="1" />
+      <File FileName="GeumEServer/Controllers/UserController.cs" />
+      <File FileName="GeumEServer/Controllers/WalkController.cs" Line="95" Column="36" />
+      <File FileName="GeumEServer/Controllers/DogController.cs" />
+      <File FileName="GeumEServer/Controllers/PlaceController.cs" Line="11" Column="20" />
+      <File FileName="GeumEServer/Controllers/ReportController.cs" Line="65" Column="42" />
+      <File FileName="GeumEServer/Data.cs" Line="112" Column="19" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="GeumEServer" expanded="True">
             <Node name="GeumEServer" expanded="True">
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="ReportController.cs" selected="True" />
+              </Node>
+              <Node name="Data" expanded="True" />
               <Node name="Migrations" expanded="True" />
             </Node>
           </Node>
@@ -26,4 +30,5 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.GeumEServer PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
 </Properties>

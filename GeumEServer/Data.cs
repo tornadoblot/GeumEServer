@@ -108,4 +108,13 @@ namespace GeumEServer
         public bool sendDel { get; set; }
         public bool recDel { get; set; }
     }
+
+    public class Ranking
+    {
+        [Key]
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int distance { get; set; }
+        public DateTime time { get; set; }
+    }
 }

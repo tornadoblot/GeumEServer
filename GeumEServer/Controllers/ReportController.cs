@@ -29,8 +29,17 @@ namespace GeumEServer.Controllers
                 .OrderByDescending(item => item.Id)
                 .ToList();
 
-            DateTime time = DateTime.MinValue;
-            int distance = 0;
+            User findUser = _context.Users
+                            .Where(x => x.Email == email)
+                            .FirstOrDefault();
+
+            Ranking ranking = _context.Rankings
+                            .Where(x => x.UserId == findUser.UserId)
+                            .FirstOrDefault();
+
+            if (ranking == null)
+                return "Can not find Ranking Info";
+
             List<int> dogList = new List<int>();
 
             string[] emotion = new string[30];
@@ -38,9 +47,6 @@ namespace GeumEServer.Controllers
 
             foreach (var i in results)
             {
-                time += i.End - i.Start;
-                distance += i.Distance;
-
                 List<WalkDog> walkDogs = _context.WalkDogs
                     .Where(item => item.WalkId == i.Id)
                     .ToList();
@@ -54,9 +60,12 @@ namespace GeumEServer.Controllers
                 {
                     emotion[cnt++] = i.Emotion + " " + i.Start.Day;
                 }
-            }            
+            }
 
-            string res = time + "/" + distance.ToString() + "/";
+            DateTime time = ranking.time;
+            int distance = ranking.distance;
+
+            string res = GetUserRanking(findUser.UserId) + "/" + time + "/" + distance.ToString() + "/";
             res += GetMostViewedDog(dogList);
 
             foreach (var i in emotion)
@@ -65,6 +74,22 @@ namespace GeumEServer.Controllers
             }
 
             return res;        
+        }
+
+        private string GetUserRanking(int userId)
+        {
+            string res = "";
+
+            List<Ranking> rankings = _context.Rankings.ToList();
+
+
+            rankings = rankings.OrderByDescending(i => i.time).ToList();
+            res += (rankings.FindIndex(i => i.UserId == userId) + 1).ToString() + "/";
+
+            rankings = rankings.OrderByDescending(i => i.distance).ToList();
+            res += (rankings.FindIndex(i => i.UserId == userId) + 1).ToString();
+
+            return res;
         }
 
         private string GetMostViewedDog(List<int> dogList)
@@ -102,6 +127,46 @@ namespace GeumEServer.Controllers
             {
                 return "/";
             }            
+        }
+
+        private void InitRanking()
+        {
+            // 그동안의 산책 정보를 가져오기
+            // 가져와서 해당 유저가 산책한 거리와 산책한 시간을 추가하기
+            // 만약 유저 정보가 없다면 새로 생성하기
+
+            List<Walk> walks = _context.Walks
+                                .ToList();
+
+            List<Ranking> add = new List<Ranking>();
+
+            foreach (var i in walks)
+            {
+                User findUser = _context.Users
+                            .Where(x => x.Email == i.Email)
+                            .FirstOrDefault();
+
+                Ranking user = add.Find(x => x.UserId == findUser.UserId);
+
+                if (user == null)
+                {
+                    user = new Ranking
+                    {
+                        UserId = findUser.UserId,
+                        distance = 0,
+                        time = DateTime.MinValue
+                    };
+                }
+
+                user.distance += i.Distance;
+                user.time += i.End - i.Start;
+                add.Add(user);
+            }
+
+            _context.Rankings.AddRange(add);
+            _context.SaveChanges();
+
+            return;
         }
     }
 }

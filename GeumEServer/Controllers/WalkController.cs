@@ -94,6 +94,8 @@ namespace GeumEServer.Controllers
             if (AddDogPlace(workId, doginfo))
                 return "Dog does not exist";
 
+            AddRankingInfo(walk);
+
             _context.SaveChanges();
             return "success";
         }
@@ -318,6 +320,34 @@ namespace GeumEServer.Controllers
         private decimal GetDistance(decimal lat, decimal log, decimal lat2, decimal log2)
         {
             return Math.Abs(lat - lat2) + Math.Abs(log - log2);
+        }
+
+        private void AddRankingInfo(Walk walk)
+        {
+            User findUser = _context.Users
+                            .Where(x => x.Email == walk.Email)
+                            .FirstOrDefault();
+
+            Ranking ranking = _context.Rankings
+                                .Where(x => x.UserId == findUser.UserId)
+                                .FirstOrDefault();
+
+            if(ranking == null)
+            {
+                ranking = new Ranking
+                {
+                    UserId = findUser.UserId,
+                    distance = 0,
+                    time = DateTime.MinValue
+                };
+
+                _context.Rankings.Add(ranking);
+            }
+
+            ranking.time += walk.End - walk.Start;
+            ranking.distance += walk.Distance;
+
+            _context.SaveChanges();
         }
     }
 }
