@@ -62,7 +62,8 @@ namespace GeumEServer.Controllers
                 }
             }
 
-            DateTime time = ranking.time;
+            TimeSpan totalTime = ranking.time - DateTime.MinValue;
+            string time = totalTime.TotalHours.ToString();
             int distance = ranking.distance;
 
             string res = GetUserRanking(findUser.UserId) + "/" + time + "/" + distance.ToString() + "/";
